@@ -1,0 +1,26 @@
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: black;
+  color: white;
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 2px;
+  background-color: #333;
+  transition: background-color 0.3s;
+}
+
+.icon-button {
+  border-radius: 9999px;
+}

@@ -1,5 +1,6 @@
 import { css } from "@emotion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import AutoAdjustment from "./AutoAdjustment";
 
 const FILTER_MAPPINGS: Record<string, (x: number) => string> = {
   brightness: (x) => `${x + 100}%`,
@@ -53,6 +54,7 @@ function Editor({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [filters, setFilters] = useState<Record<string, number>>({});
   const [activeFilter, setActiveFilter] = useState("brightness");
+  const [showAutoAdjustment, setShowAutoAdjustment] = useState(false);
   const [showOriginal, setShowOriginal] = useState(false);
 
   const handleSave = useCallback(() => {
@@ -117,6 +119,7 @@ function Editor({
       <div
         css={css`
           height: 100%;
+          min-height: 0;
           display: flex;
           flex-direction: column;
           @media (min-width: 800px) {
@@ -126,6 +129,8 @@ function Editor({
       >
         <div
           css={css`
+            min-width: 0;
+            min-height: 0;
             flex-grow: 1;
           `}
           onPointerDown={() => setShowOriginal(true)}
@@ -206,6 +211,9 @@ function Editor({
               }
             `}
           >
+            <button onClick={() => setShowAutoAdjustment(true)}>
+              自动调整
+            </button>
             <button
               onClick={() => setActiveFilter("brightness")}
               className={activeFilter === "brightness" ? "active" : ""}
@@ -227,6 +235,11 @@ function Editor({
           </div>
         </div>
       </div>
+      <AutoAdjustment
+        inputRef={canvasRef}
+        open={showAutoAdjustment}
+        onClose={() => setShowAutoAdjustment(false)}
+      />
     </div>
   );
 }
